@@ -4,8 +4,7 @@ import './Point.css';
 class Point extends Component {
   render() {
     return (
-      <div className={`point ${ this.props.color }`}>
-       
+      <div className={`point ${ this.props.alive ? "red" : "" }`}>       
       </div>
     );
   }
