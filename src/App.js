@@ -7,21 +7,13 @@ class App extends Component {
    constructor(props) {
     super(props);   
     this.frameId ="";
-    this.frameCount = 0;
-    this.boolColor = true;
+    this.frameCount = 0;    
     this.fps = 60;
     this.state = {     
-      color: "red",
-      request: 0
+      aliveMas: this.initAlive()
     };  
-   this.setColor = this.setColor.bind(this);
+    this.setColor = this.setColor.bind(this);
   };
- createField(){   
-   let points = [];
-   for(let i = 0; i < 100; i++)
-     points.push(<Point color = {this.state.color}/>);
-   return points;
- };
 
  componentDidMount(){
     this.start();
@@ -35,19 +27,31 @@ class App extends Component {
     if(this.frameCount < this.fps){
       this.frameCount++;
     }else{
-      this.frameCount = 0;
-      this.boolColor = !this.boolColor;
+      this.frameCount = 0;      
       this.setState({
-          color: this.boolColor ?  "" : "red"
+          aliveMas: this.addTransform(this.state.aliveMas)
       });
-    }
-      this.state.frameId = 
-      window.requestAnimationFrame( this.setColor )
+    }   
+    this.frameId = window.requestAnimationFrame( this.setColor )
    };
+
+ addTransform(mass){
+   return mass.map(function(alive) {            
+                  return !alive;
+               });  
+ };
+
+ initAlive(){
+  let mass = [];
+  for(let i = 0; i <100; i++){
+    mass.push( Math.random() >= 0.5);
+  }
+  return mass;
+ }
  
  start(){
-   if( !this.state.frameId ) {
-     this.state.frameId = 
+   if( !this.frameId ) {
+     this.frameId = 
      window.requestAnimationFrame( this.setColor );
    }
  }
@@ -56,11 +60,18 @@ class App extends Component {
      window.cancelAnimationFrame( this.state.frameId );
  }
 
+ createField(){   
+   let points = [];
+   for(let i = 0; i < 100; i++)
+     points.push(<Point alive = {this.state.aliveMas[i]} key = {i}/>);
+   return points;
+ };
+
  render() {
    const points = this.createField();
    return (
       <div className="container">
-       <Point color = {this.state.color}/>
+       {points}
       </div>
     );
   }
