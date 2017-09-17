@@ -2,6 +2,16 @@ import React, { Component } from 'react';
 import './App.css';
 import Point from './Point/Point';
 
+
+class Element {
+ constructor(value, posX, posY){
+    this.value = value;
+    this.posX = posX;
+    this.posY = posY;
+ }
+
+}
+
 class App extends Component {
 
    constructor(props) {
@@ -9,7 +19,7 @@ class App extends Component {
     this.frameId ="";
     this.frameCount = 0;    
     this.size = 10;
-    this.fps = 60;
+    this.fps = 35;
     this.state = {     
       aliveMas: this.initAlive()
     };  
@@ -31,7 +41,7 @@ class App extends Component {
       this.frameCount = 0;
      // if(this.allDie(this.state.aliveMas))    stop();   
       this.setState({
-          aliveMas: this.addTransform(this.state.aliveMas)
+        //aliveMas: this.addTransform(this.state.aliveMas)
       });
     }   
     this.frameId = window.requestAnimationFrame( this.setColor )
@@ -41,33 +51,43 @@ class App extends Component {
    let alivePtCount = 0;
    let newMass = mass;
   
-   for(let i = 0; i < mass.length; i++){
-      if(mass[i-1] != undefined && mass[i-1])
-          alivePtCount++;
-      if(mass[i+1] != undefined && mass[i+1])
-          alivePtCount++;
-      if(mass[i-10] != undefined && mass[i-10])
-          alivePtCount++;
-      if(mass[i+10] != undefined && mass[i+10])
-          alivePtCount++;
-      if(mass[i-9] != undefined && mass[i-9])
-          alivePtCount++;
-      if(mass[i+9] != undefined && mass[i+9])
-          alivePtCount++;
-      if(mass[i-11] != undefined && mass[i-11])
-          alivePtCount++;
-      if(mass[i+11] != undefined && mass[i+11])
-          alivePtCount++;     
+   for(let i = 0; i < 100; i++){
+
+    if(i > 10 && i < 89 &&
+      i != 20 && i != 30 && i != 40 && i != 50 && i != 60 && i != 70 && i != 80 &&  
+      i != 19 && i != 29 && i != 39 && i != 49 && i != 59 && i != 69 && i != 79 
+      ){
   
-      if(alivePtCount == 3) newMass[i] = true;
-      else if(alivePtCount == 3 || alivePtCount == 2)
-           newMass[i] = newMass[i]
-      else if(alivePtCount > 3 || alivePtCount < 2)
-            newMass[i] = false;
-      alivePtCount = 0;
+      if(mass[i - 1])  alivePtCount++;  
+      if(mass[i + 1])  alivePtCount++;     
+      if(mass[i - 10]) alivePtCount++;   
+      if(mass[i + 10]) alivePtCount++;    
+      if(mass[i - 9])  alivePtCount++;
+      if(mass[i + 9])  alivePtCount++;
+      if(mass[i - 11]) alivePtCount++;
+      if(mass[i + 11]) alivePtCount++;     
+      
+     
+    if(alivePtCount == 3 && !mass[i]) newMass[i] = true;
+    if((alivePtCount == 3 || alivePtCount == 2) && mass[i])
+      newMass[i] =  true;
+    if((alivePtCount > 3 || alivePtCount < 2) && mass[i])
+       newMass[i] = false;
+     alivePtCount = 0;   }
+   
+    else if(i >= 0 && i < 10){
+      if(mass[i - 1]  )  alivePtCount++;  
+      if(mass[i + 1])  alivePtCount++;     
+      if(mass[i - 10]) alivePtCount++;   
+      if(mass[i + 10]) alivePtCount++;    
+      if(mass[i - 9])  alivePtCount++;
+      if(mass[i + 9])  alivePtCount++;
+      if(mass[i - 11]) alivePtCount++;
+      if(mass[i + 11]) alivePtCount++;  
     }
 
-    return newMass;  
+  }
+  return newMass;  
  };
 
  
@@ -81,17 +101,19 @@ class App extends Component {
 }
 
  initAlive(){
-  let mass = [];
-  let m = 43;
+  let mass = [];  
+  let xPos = 0;
+  let yPos = 0; 
   for(let i = 0; i < Math.pow(this.size, 2); i++){
-    mass.push( Math.random() >= 0.5);
-   /*if(i === m || i === m + 10 || i === m - 10
-      || i === m + 9 || i === m - 9
-      || i === m + 11 || i === m - 11
-      || i === m + 1  || i === m - 1
-      ) mass.push( true);
-    else mass.push( false);*/
+     mass.push(new Element(Math.random() >= 0.5, xPos, yPos));
+     if(xPos < 9) xPos++;
+     else {
+       xPos = 0;
+       if(yPos < 9) yPos++;
+       else yPos = 0;
+     }
   }
+   console.log(mass);
   return mass;
  }
  
@@ -109,7 +131,7 @@ class App extends Component {
  createField(){   
    let points = [];
    for(let i = 0; i < Math.pow(this.size, 2); i++)
-     points.push(<Point alive = {this.state.aliveMas[i]} key = {i}/>);
+     points.push(<Point alive = {this.state.aliveMas[i].value} key = {i}/>);
    return points;
  };
 
