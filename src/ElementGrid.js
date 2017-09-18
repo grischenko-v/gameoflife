@@ -35,7 +35,8 @@ class ElementGrid{
       if(this.getPrevXPrevY(temp.X, temp.Y))aliveCount++;
       
       //check should component be alive;
-
+      
+     
       aliveCount = 0;
     }   
   };
@@ -50,51 +51,51 @@ class ElementGrid{
   };
 
   findElement(posX, posY){
-    return this.hash[posX + "" + posY];
+    return this.hash[posX + "" + posY].value;
   };
  
   getNextX(posX, posY){  
     let nextX = (posX === 9) ? 0 : posX + 1;
-    return this.hash[nextX + " " + posY];
+    return this.hash[nextX + " " + posY].value;
   };
  
   getPrevX(posX, posY){
     let prevX = (posX === 0) ? 9 : posX - 1;
-    return this.hash[prevX + " " + posY];
+    return this.hash[prevX + " " + posY].value;
   };
 
   getNextY(posX, posY){
     let nextY = (posY === 9) ? 0 : posY + 1;
-    return this.hash[posX + " " + nextY];
+    return this.hash[posX + " " + nextY].value;
   };
  
   getPrevY(posX, posY){
     let prevY = (posY === 0) ? 9 : posY - 1;
-    return this.hash[posX + " " + prevY];
+    return this.hash[posX + " " + prevY].value;
   };
  
   getNextXNextY(posX, posY){
     let nextX = (posX === 9) ? 0 : posX + 1; 
     let nextY = (posY === 9) ? 0 : posY + 1; 
-    return this.hash[nextX + " " + nextY];
+    return this.hash[nextX + " " + nextY].value;
   };
 
   getNextXPrevY(posX, posY){
     let nextX = (posX === 9) ? 0 : posX + 1;
     let prevY = (posY === 0) ? 9 : posY - 1;
-    return this.hash[nextX + " " + prevY];
+    return this.hash[nextX + " " + prevY].value;
   };
  
   getPrevXNextY(posX, posY){
     let prevX = (posX === 0) ? 9 : posX - 1;
     let nextY = (posY === 9) ? 0 : posY + 1;
-    return this.hash[prevX + " " + nextY];
+    return this.hash[prevX + " " + nextY].value;
   };
 
   getPrevXPrevY(posX, posY){
     let prevX = (posX === 0) ? 9 : posX - 1;
     let prevY = (posY === 0) ? 9 : posY - 1;
-    return this.hash[prevX + " " + prevY];
+    return this.hash[prevX + " " + prevY].value;
   };
 
   cloneObject(obj) {
