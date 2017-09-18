@@ -11,8 +11,10 @@ class App extends Component {
     this.frameCount = 0;    
     this.size = 10;
     this.fps = 35;
+    this.grid = new ElementGrid(this.size);
+    this.grid.init();
     this.state = {     
-      aliveMas: this.initAlive()
+      aliveMas: this.grid.hash
     };  
     this.setColor = this.setColor.bind(this);
   };
@@ -37,104 +39,6 @@ class App extends Component {
     }   
     this.frameId = window.requestAnimationFrame( this.setColor )
    };
-
- addTransform(mass){
-   let alivePtCount = 0;
-   let newMass = mass;
-  
-   for(let i = 0; i < 100; i++){  
-      if(mass[i - 1])  alivePtCount++;  
-      if(mass[i + 1])  alivePtCount++;     
-      if(mass[i - 10]) alivePtCount++;   
-      if(mass[i + 10]) alivePtCount++;    
-      if(mass[i - 9])  alivePtCount++;
-      if(mass[i + 9])  alivePtCount++;
-      if(mass[i - 11]) alivePtCount++;
-      if(mass[i + 11]) alivePtCount++;     
-      
-     
-    if(alivePtCount === 3 && !mass[i]) newMass[i] = true;
-    if((alivePtCount === 3 || alivePtCount === 2) && mass[i])
-      newMass[i] =  true;
-    if((alivePtCount > 3 || alivePtCount < 2) && mass[i])
-       newMass[i] = false;
-     alivePtCount = 0;      
-
-  }
-  return newMass;  
- };
-
- 
- allDie(mass){
-   let count = 0
-       for(let i = 0; i < mass.length; i++){
-    if(mass[i]) count++;   
- } 
- return (count === 0)
-}
-
- initAlive(){
-  let elmMass = {};  
-  let xPos = 0;
-  let yPos = 0; 
-  let temp;
-  for(let i = 0; i < Math.pow(this.size, 2); i++){  
-      temp = this.indexToPosition(i);
-      xPos = temp.X;
-      yPos = temp.Y;
-     elmMass[xPos + "" + yPos] = new Element(false, xPos, yPos);      
-  }  
-  return elmMass;
- }
-
- findElement(obj, posX, posY){
-    return obj[posX + "" + posY];
- }
- 
- getNextX(obj, posX, posY){  
-   let nextX = (posX === 9) ? 0 : posX + 1;
-   return obj[nextX + " " + posY];
- }
- 
- getPrevX(obj, posX, posY){
-   let prevX = (posX === 0) ? 9 : posX - 1;
-   return obj[prevX + " " + posY];
- }
-
- getNextY(obj, posX, posY){
-   let nextY = (posY === 9) ? 0 : posY + 1;
-   return obj[posX + " " + nextY];
- }
- 
- getPrevY(obj, posX, posY){
-   let prevY = (posY === 0) ? 9 : posY - 1;
-   return obj[posX + " " + prevY];
- }
- 
- getNextXNextY(obj, posX, posY){
-   let nextX = (posX === 9) ? 0 : posX + 1; 
-   let nextY = (posY === 9) ? 0 : posY + 1; 
-   return obj[nextX + " " + nextY];
- }
-
- getNextXPrevY(obj, posX, posY){
-   let nextX = (posX === 9) ? 0 : posX + 1;
-   let prevY = (posY === 0) ? 9 : posY - 1;
-   return obj[nextX + " " + prevY];
- }
- 
- getPrevXNextY(obj, posX, posY){
-   let prevX = (posX === 0) ? 9 : posX - 1;
-   let nextY = (posY === 9) ? 0 : posY + 1;
-   return obj[prevX + " " + nextY];
- }
-
- getPrevXPrevY(obj, posX, posY){
-   let prevX = (posX === 0) ? 9 : posX - 1;
-   let prevY = (posY === 0) ? 9 : posY - 1;
-  return obj[prevX + " " + prevY];
- }
-
 
  start(){
    if( !this.frameId ) {
