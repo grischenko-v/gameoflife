@@ -17,6 +17,7 @@ class ElementGrid{
       yPos = temp.Y;
       this.hash[xPos + "" + yPos] = new Element(Math.random() >= 0.5, xPos, yPos);      
     }     
+    this.hashMas.push(this.hash);
   };
 
   addTransform(){
@@ -40,9 +41,12 @@ class ElementGrid{
       aliveCount = 0;
     }   
     this.hash = this.cloneObject(newHash);
+    this.hashMas.push(this.hash);
   };
 
   allDie(){
+  	//check
+    //this.hashMas
   };
  
   indexToPosition(index){
