@@ -119,12 +119,71 @@ class App extends Component {
     return obj[posX + "" + posY];
  }
  
- checkHash(posX, posY){
-   let hashX, hashY;
-  
-
- } 
+ getNextX(obj, posX, posY){
+   let nextX;
+   if(posX == 9) nextX = 0;
+   else nextX = posX + 1;
+   return obj[nextX + " " + posY];
+ }
  
+ getPrevX(obj, posX, posY){
+   let prevX;
+   if(posX == 0) prevX = 9;
+   else prevX = posX - 1;
+   return obj[prevX + " " + posY];
+ }
+
+ getNextY(obj, posX, posY){
+   let nextY;
+   if(posY == 9) nextY = 0;
+   else nextY = posY + 1;
+   return obj[posX + " " + nextY];
+ }
+ 
+ getPrevY(obj, posX, posY){
+   let prevY;
+   if(posY == 0) prevY = 9;
+   else prevY = posY - 1;
+   return obj[posX + " " + prevY];
+ }
+ 
+ getNextXNextY(obj, posX, posY){
+   let nextX, nextY;
+   if(posX == 9) nextX = 0;
+   else nextX = posX + 1;
+   if(posY == 9) nextY = 0;
+   else nextY = posY + 1;
+   return obj[nextX + " " + nextY];
+ }
+
+ getNextXPrevY(obj, posX, posY){
+   let nextX, prevY;
+   if(posX == 9) nextX = 0;
+   else nextX = posX + 1;
+   if(posY == 0) prevY = 9;
+   else prevY = posY - 1;
+   return obj[nextX + " " + prevY];
+ }
+ 
+ getPrevXNextY(obj, posX, posY){
+   let prevX, nextY;
+   if(posX == 0) prevX = 9;
+   else prevX = posX - 1;
+   if(posY == 9) nextY = 0;
+   else nextY = posY + 1;
+   return obj[prevX + " " + nextY];
+ }
+
+ getPrevXPrevY(obj, posX, posY){
+   let prevX, prevY;
+   if(posX == 0) prevX = 9;
+   else prevX = posX - 1;
+   if(posY == 0) prevY = 9;
+   else prevY = posY - 1;
+  return obj[prevX + " " + prevY];
+ }
+
+
  start(){
    if( !this.frameId ) {
      this.frameId = 
