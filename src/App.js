@@ -1,20 +1,9 @@
 import React, { Component } from 'react';
 import './App.css';
 import Point from './Point/Point';
-
-
-class Element {
- constructor(value, posX, posY){
-    this.value = value;
-    this.posX = posX;
-    this.posY = posY;   
- }
-
-}
-
+import Element from './Element';
 
 class App extends Component {
-
    constructor(props) {
     super(props);   
     this.frameId ="";
@@ -52,13 +41,7 @@ class App extends Component {
    let alivePtCount = 0;
    let newMass = mass;
   
-   for(let i = 0; i < 100; i++){
-
-    if(i > 10 && i < 89 &&
-      i != 20 && i != 30 && i != 40 && i != 50 && i != 60 && i != 70 && i != 80 &&  
-      i != 19 && i != 29 && i != 39 && i != 49 && i != 59 && i != 69 && i != 79 
-      ){
-  
+   for(let i = 0; i < 100; i++){  
       if(mass[i - 1])  alivePtCount++;  
       if(mass[i + 1])  alivePtCount++;     
       if(mass[i - 10]) alivePtCount++;   
@@ -69,23 +52,12 @@ class App extends Component {
       if(mass[i + 11]) alivePtCount++;     
       
      
-    if(alivePtCount == 3 && !mass[i]) newMass[i] = true;
-    if((alivePtCount == 3 || alivePtCount == 2) && mass[i])
+    if(alivePtCount === 3 && !mass[i]) newMass[i] = true;
+    if((alivePtCount === 3 || alivePtCount === 2) && mass[i])
       newMass[i] =  true;
     if((alivePtCount > 3 || alivePtCount < 2) && mass[i])
        newMass[i] = false;
-     alivePtCount = 0;   }
-   
-    else if(i >= 0 && i < 10){
-      if(mass[i - 1]  )  alivePtCount++;  
-      if(mass[i + 1])  alivePtCount++;     
-      if(mass[i - 10]) alivePtCount++;   
-      if(mass[i + 10]) alivePtCount++;    
-      if(mass[i - 9])  alivePtCount++;
-      if(mass[i + 9])  alivePtCount++;
-      if(mass[i - 11]) alivePtCount++;
-      if(mass[i + 11]) alivePtCount++;  
-    }
+     alivePtCount = 0;      
 
   }
   return newMass;  
@@ -95,17 +67,16 @@ class App extends Component {
  allDie(mass){
    let count = 0
        for(let i = 0; i < mass.length; i++){
-    if(mass[i]) count++;
-   
+    if(mass[i]) count++;   
  } 
- return (count == 0)
+ return (count === 0)
 }
 
  initAlive(){
   let elmMass = {};  
   let xPos = 0;
   let yPos = 0; 
-  let temp;//think about del it
+  let temp;
   for(let i = 0; i < Math.pow(this.size, 2); i++){  
       temp = this.indexToPosition(i);
       xPos = temp.X;
@@ -119,67 +90,47 @@ class App extends Component {
     return obj[posX + "" + posY];
  }
  
- getNextX(obj, posX, posY){
-   let nextX;
-   if(posX == 9) nextX = 0;
-   else nextX = posX + 1;
+ getNextX(obj, posX, posY){  
+   let nextX = (posX === 9) ? 0 : posX + 1;
    return obj[nextX + " " + posY];
  }
  
  getPrevX(obj, posX, posY){
-   let prevX;
-   if(posX == 0) prevX = 9;
-   else prevX = posX - 1;
+   let prevX = (posX === 0) ? 9 : posX - 1;
    return obj[prevX + " " + posY];
  }
 
  getNextY(obj, posX, posY){
-   let nextY;
-   if(posY == 9) nextY = 0;
-   else nextY = posY + 1;
+   let nextY = (posY === 9) ? 0 : posY + 1;
    return obj[posX + " " + nextY];
  }
  
  getPrevY(obj, posX, posY){
-   let prevY;
-   if(posY == 0) prevY = 9;
-   else prevY = posY - 1;
+   let prevY = (posY === 0) ? 9 : posY - 1;
    return obj[posX + " " + prevY];
  }
  
  getNextXNextY(obj, posX, posY){
-   let nextX, nextY;
-   if(posX == 9) nextX = 0;
-   else nextX = posX + 1;
-   if(posY == 9) nextY = 0;
-   else nextY = posY + 1;
+   let nextX = (posX === 9) ? 0 : posX + 1; 
+   let nextY = (posY === 9) ? 0 : posY + 1; 
    return obj[nextX + " " + nextY];
  }
 
  getNextXPrevY(obj, posX, posY){
-   let nextX, prevY;
-   if(posX == 9) nextX = 0;
-   else nextX = posX + 1;
-   if(posY == 0) prevY = 9;
-   else prevY = posY - 1;
+   let nextX = (posX === 9) ? 0 : posX + 1;
+   let prevY = (posY === 0) ? 9 : posY - 1;
    return obj[nextX + " " + prevY];
  }
  
  getPrevXNextY(obj, posX, posY){
-   let prevX, nextY;
-   if(posX == 0) prevX = 9;
-   else prevX = posX - 1;
-   if(posY == 9) nextY = 0;
-   else nextY = posY + 1;
+   let prevX = (posX === 0) ? 9 : posX - 1;
+   let nextY = (posY === 9) ? 0 : posY + 1;
    return obj[prevX + " " + nextY];
  }
 
  getPrevXPrevY(obj, posX, posY){
-   let prevX, prevY;
-   if(posX == 0) prevX = 9;
-   else prevX = posX - 1;
-   if(posY == 0) prevY = 9;
-   else prevY = posY - 1;
+   let prevX = (posX === 0) ? 9 : posX - 1;
+   let prevY = (posY === 0) ? 9 : posY - 1;
   return obj[prevX + " " + prevY];
  }
 
