@@ -4,7 +4,7 @@ import './Point.css';
 class Point extends Component {
   render() {
     return (
-      <div className={`point ${ this.props.alive ? "red" : "" }`}>       
+      <div className={`point ${ this.props.alive ? "red" : "transparent" }`}>       
       </div>
     );
   }

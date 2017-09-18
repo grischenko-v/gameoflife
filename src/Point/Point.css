@@ -48,3 +48,7 @@
  background: radial-gradient(center, ellipse cover, #ec8181 0%,#ff1313 100%); 
  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ec8181', endColorstr='#ff1313',GradientType=1 ); 
 }
+
+.transparent{
+ background: transparent;	
+}
