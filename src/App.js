@@ -12,7 +12,7 @@ class App extends Component {
     this.size = 10;
     this.fps = 35;
     this.grid = new ElementGrid(this.size);
-    this.grid.init(true);
+    this.grid.init();   
     this.state = {     
       aliveMas: this.grid.hash
     };  
@@ -32,9 +32,12 @@ class App extends Component {
       this.frameCount++;
     }else{
       this.frameCount = 0;
+
+       this.grid.addTransform();
+       
      // if(this.allDie(this.state.aliveMas))    stop();   
       this.setState({
-        //aliveMas: this.addTransform(this.state.aliveMas)
+        aliveMas: this.grid.hash
       });
     }   
     this.frameId = window.requestAnimationFrame( this.setColor )

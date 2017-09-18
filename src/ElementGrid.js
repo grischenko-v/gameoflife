@@ -7,7 +7,7 @@ class ElementGrid{
     this.hashMas = [];
   }; 
 
-  init(val){  
+  init(){  
     let xPos = 0;
     let yPos = 0; 
     let temp;
@@ -15,7 +15,7 @@ class ElementGrid{
       temp = this.indexToPosition(i);
       xPos = temp.X;
       yPos = temp.Y;
-      this.hash[xPos + "" + yPos] = new Element(val, xPos, yPos);      
+      this.hash[xPos + "" + yPos] = new Element(Math.random() >= 0.5, xPos, yPos);      
     }     
   };
 
@@ -32,13 +32,14 @@ class ElementGrid{
       if(this.getNextXNextY(temp.X, temp.Y))aliveCount++;
       if(this.getNextXPrevY(temp.X, temp.Y))aliveCount++;
       if(this.getPrevXNextY(temp.X, temp.Y))aliveCount++;
-      if(this.getPrevXPrevY(temp.X, temp.Y))aliveCount++;
-      
+      if(this.getPrevXPrevY(temp.X, temp.Y))aliveCount++;      
       //check should component be alive;
-      
-     
+      if(aliveCount === 3 && !this.hash[temp.X + "" + temp.Y]) newHash[temp.X + "" + temp.Y].value = true;
+      if((aliveCount === 3 || aliveCount === 2) &&  this.hash[temp.X + "" + temp.Y]) newHash[temp.X + "" + temp.Y].value = true;
+      if((aliveCount > 3 || aliveCount < 2) &&  this.hash[temp.X + "" + temp.Y]) newHash[temp.X + "" + temp.Y].value = false;
       aliveCount = 0;
     }   
+    this.hash = this.cloneObject(newHash);
   };
 
   allDie(){
@@ -56,46 +57,46 @@ class ElementGrid{
  
   getNextX(posX, posY){  
     let nextX = (posX === 9) ? 0 : posX + 1;
-    return this.hash[nextX + " " + posY].value;
+    return this.hash[nextX + "" + posY].value;
   };
  
   getPrevX(posX, posY){
     let prevX = (posX === 0) ? 9 : posX - 1;
-    return this.hash[prevX + " " + posY].value;
+    return this.hash[prevX + "" + posY].value;
   };
 
   getNextY(posX, posY){
     let nextY = (posY === 9) ? 0 : posY + 1;
-    return this.hash[posX + " " + nextY].value;
+    return this.hash[posX + "" + nextY].value;
   };
  
   getPrevY(posX, posY){
     let prevY = (posY === 0) ? 9 : posY - 1;
-    return this.hash[posX + " " + prevY].value;
+    return this.hash[posX + "" + prevY].value;
   };
  
   getNextXNextY(posX, posY){
     let nextX = (posX === 9) ? 0 : posX + 1; 
     let nextY = (posY === 9) ? 0 : posY + 1; 
-    return this.hash[nextX + " " + nextY].value;
+    return this.hash[nextX + "" + nextY].value;
   };
 
   getNextXPrevY(posX, posY){
     let nextX = (posX === 9) ? 0 : posX + 1;
     let prevY = (posY === 0) ? 9 : posY - 1;
-    return this.hash[nextX + " " + prevY].value;
+    return this.hash[nextX + "" + prevY].value;
   };
  
   getPrevXNextY(posX, posY){
     let prevX = (posX === 0) ? 9 : posX - 1;
     let nextY = (posY === 9) ? 0 : posY + 1;
-    return this.hash[prevX + " " + nextY].value;
+    return this.hash[prevX + "" + nextY].value;
   };
 
   getPrevXPrevY(posX, posY){
     let prevX = (posX === 0) ? 9 : posX - 1;
     let prevY = (posY === 0) ? 9 : posY - 1;
-    return this.hash[prevX + " " + prevY].value;
+    return this.hash[prevX + "" + prevY].value;
   };
 
   cloneObject(obj) {
