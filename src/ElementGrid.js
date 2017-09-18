@@ -16,10 +16,28 @@ class ElementGrid{
       xPos = temp.X;
       yPos = temp.Y;
       this.hash[xPos + "" + yPos] = new Element(false, xPos, yPos);      
-    }   
+    }     
   };
 
   addTransform(){
+  	 let temp;
+  	 let aliveCount;
+  	 let newHash = this.cloneObject(this.hash);
+  	 for(let i = 0; i < Math.pow(this.size, 2); i++){  
+      temp = this.indexToPosition(i);
+      if(this.getNextX())aliveCount++;
+      if(this.getPrevX())aliveCount++;
+      if(this.getNextY())aliveCount++;
+      if(this.getPrevY())aliveCount++;
+      if(this.getNextXNextY())aliveCount++;
+      if(this.getNextXPrevY())aliveCount++;
+      if(this.getPrevXNextY())aliveCount++;
+      if(this.getPrevXPrevY())aliveCount++;
+      
+      //check should component be alive;
+
+      aliveCount = 0;
+    }   
   };
 
   allDie(){
@@ -77,6 +95,17 @@ class ElementGrid{
     let prevX = (posX === 0) ? 9 : posX - 1;
     let prevY = (posY === 0) ? 9 : posY - 1;
     return this.hash[prevX + " " + prevY];
+  };
+
+  cloneObject(obj) {
+    let clone = {};
+    for(let i in obj) {
+        if(typeof(obj[i])=="object" && obj[i] != null)
+            clone[i] = this.cloneObject(obj[i]);
+        else
+            clone[i] = obj[i];
+    }
+    return clone;
   };
 }
 
