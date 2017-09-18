@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
 import Point from './Point/Point';
-import Element from './Element';
 import ElementGrid from './ElementGrid';
 
 class App extends Component {
@@ -10,7 +9,7 @@ class App extends Component {
     this.frameId ="";
     this.frameCount = 0;    
     this.size = 10;
-    this.fps = 35;
+    this.fps = 30;
     this.grid = new ElementGrid(this.size);
     this.grid.init();   
     this.state = {     
