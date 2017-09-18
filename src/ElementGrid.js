@@ -7,7 +7,7 @@ class ElementGrid{
     this.hashMas = [];
   }; 
 
-  init(){  
+  init(val){  
     let xPos = 0;
     let yPos = 0; 
     let temp;
@@ -15,24 +15,24 @@ class ElementGrid{
       temp = this.indexToPosition(i);
       xPos = temp.X;
       yPos = temp.Y;
-      this.hash[xPos + "" + yPos] = new Element(false, xPos, yPos);      
+      this.hash[xPos + "" + yPos] = new Element(val, xPos, yPos);      
     }     
   };
 
   addTransform(){
   	 let temp;
-  	 let aliveCount;
+  	 let aliveCount = 0;
   	 let newHash = this.cloneObject(this.hash);
   	 for(let i = 0; i < Math.pow(this.size, 2); i++){  
       temp = this.indexToPosition(i);
-      if(this.getNextX())aliveCount++;
-      if(this.getPrevX())aliveCount++;
-      if(this.getNextY())aliveCount++;
-      if(this.getPrevY())aliveCount++;
-      if(this.getNextXNextY())aliveCount++;
-      if(this.getNextXPrevY())aliveCount++;
-      if(this.getPrevXNextY())aliveCount++;
-      if(this.getPrevXPrevY())aliveCount++;
+      if(this.getNextX(temp.X, temp.Y))aliveCount++;
+      if(this.getPrevX(temp.X, temp.Y))aliveCount++;
+      if(this.getNextY(temp.X, temp.Y))aliveCount++;
+      if(this.getPrevY(temp.X, temp.Y))aliveCount++;
+      if(this.getNextXNextY(temp.X, temp.Y))aliveCount++;
+      if(this.getNextXPrevY(temp.X, temp.Y))aliveCount++;
+      if(this.getPrevXNextY(temp.X, temp.Y))aliveCount++;
+      if(this.getPrevXPrevY(temp.X, temp.Y))aliveCount++;
       
       //check should component be alive;
 
@@ -100,7 +100,7 @@ class ElementGrid{
   cloneObject(obj) {
     let clone = {};
     for(let i in obj) {
-        if(typeof(obj[i])=="object" && obj[i] != null)
+        if(typeof(obj[i]) === "object" && obj[i] != null)
             clone[i] = this.cloneObject(obj[i]);
         else
             clone[i] = obj[i];

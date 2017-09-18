@@ -12,7 +12,7 @@ class App extends Component {
     this.size = 10;
     this.fps = 35;
     this.grid = new ElementGrid(this.size);
-    this.grid.init();
+    this.grid.init(true);
     this.state = {     
       aliveMas: this.grid.hash
     };  
@@ -50,6 +50,7 @@ class App extends Component {
  stop(){
      window.cancelAnimationFrame( this.state.frameId );
  }
+
  indexToPosition(index){
    let yFind = parseInt(index / 10);
    let xFind = index - yFind * 10;
