@@ -7,10 +7,11 @@ class Element {
  constructor(value, posX, posY){
     this.value = value;
     this.posX = posX;
-    this.posY = posY;
+    this.posY = posY;   
  }
 
 }
+
 
 class App extends Component {
 
@@ -101,21 +102,28 @@ class App extends Component {
 }
 
  initAlive(){
-  let mass = [];  
+  let elmMass = {};  
   let xPos = 0;
   let yPos = 0; 
-  for(let i = 0; i < Math.pow(this.size, 2); i++){
-     mass.push(new Element(Math.random() >= 0.5, xPos, yPos));
-     if(xPos < 9) xPos++;
-     else {
-       xPos = 0;
-       if(yPos < 9) yPos++;
-       else yPos = 0;
-     }
-  }
-   console.log(mass);
-  return mass;
+  let temp;//think about del it
+  for(let i = 0; i < Math.pow(this.size, 2); i++){  
+      temp = this.indexToPosition(i);
+      xPos = temp.X;
+      yPos = temp.Y;
+     elmMass[xPos + "" + yPos] = new Element(false, xPos, yPos);      
+  }  
+  return elmMass;
  }
+
+ findElement(obj, posX, posY){
+    return obj[posX + "" + posY];
+ }
+ 
+ checkHash(posX, posY){
+   let hashX, hashY;
+  
+
+ } 
  
  start(){
    if( !this.frameId ) {
@@ -127,11 +135,21 @@ class App extends Component {
  stop(){
      window.cancelAnimationFrame( this.state.frameId );
  }
+ indexToPosition(index){
+   let yFind = parseInt(index / 10);
+   let xFind = index - yFind * 10;
+     return {X: xFind, Y: yFind};
+ }
 
  createField(){   
    let points = [];
-   for(let i = 0; i < Math.pow(this.size, 2); i++)
-     points.push(<Point alive = {this.state.aliveMas[i].value} key = {i}/>);
+   let pointIndex = "";
+   let temp; //think about del it  
+   for(let i = 0; i < Math.pow(this.size, 2); i++){
+     temp = this.indexToPosition(i);     
+     pointIndex = temp.X + "" + temp.Y;    
+     points.push(<Point alive = {this.state.aliveMas[pointIndex].value} key = {i}/>);
+   }  
    return points;
  };
 
