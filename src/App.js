@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import Point from './Point/Point';
 import Element from './Element';
+import ElementGrid from './ElementGrid';
 
 class App extends Component {
    constructor(props) {
