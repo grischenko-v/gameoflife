@@ -4,6 +4,7 @@ class ElementGrid{
   constructor(aSize){
     this.hash = {}; 
     this.size = aSize;     
+    this.hashMas = [];
   }; 
 
   init(){  
