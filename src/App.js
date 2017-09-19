@@ -8,7 +8,7 @@ class App extends Component {
     super(props);  
     this.frameCount = 0;    
     this.size = 10;
-    this.fps = 40;
+    this.fps = 120;
     this.grid = new ElementGrid(this.size);
     this.grid.init();   
     this.state = {     
