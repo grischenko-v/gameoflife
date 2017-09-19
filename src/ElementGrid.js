@@ -60,8 +60,21 @@ class ElementGrid{
       this.hashMas[this.hash.toStringHashId] = this.hash;
       return false;//not die
     }	
-    return false;//die   
+    return true;//die   
   }; 
+
+  allDie(){
+    let xPos = 0;
+    let yPos = 0; 
+    let temp;
+    for(let i = 0; i < Math.pow(this.size, 2); i++){  
+      temp = ElementGrid.indexToPosition(i);
+      xPos = temp.X;
+      yPos = temp.Y;
+      if(this.hash[xPos + "" + yPos].value) return false;
+    }
+  	return true;
+  };
  
   static indexToPosition(index){
     let yFind = parseInt(index / 10);
