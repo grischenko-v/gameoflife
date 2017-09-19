@@ -9,28 +9,20 @@ class ElementGrid{
   }; 
 
   toStringHashId(){
-  	let xPos = 0;
-    let yPos = 0; 
     let temp;
     let rtStr = "";
   	for(let i = 0; i < Math.pow(this.size,2); i++){
-      temp = ElementGrid.indexToPosition(i);
-      xPos = temp.X;
-      yPos = temp.Y;
-      rtStr += this.hash[xPos + "" + yPos].toString();   
+      temp = ElementGrid.indexToPosition(i);     
+      rtStr += this.hash[temp.index].toString();   
   	}
   	return rtStr;
   };
 
-  init(){  
-    let xPos = 0;
-    let yPos = 0; 
+  init(){    
     let temp;
-    for(let i = 0; i < Math.pow(this.size, 2); i++){  
+    for(let i = 0; i < Math.pow(this.size, 2); i++){   
       temp = ElementGrid.indexToPosition(i);
-      xPos = temp.X;
-      yPos = temp.Y;
-      this.hash[xPos + "" + yPos] = new Element(Math.random() >= 0.5, xPos, yPos);      
+      this.hash[temp.index] = new Element(Math.random() >= 0.5, temp.X, temp.Y);      
     }     
     this.hashMas[this.hash.toStringHashId] = this.hash;
     };
@@ -50,9 +42,9 @@ class ElementGrid{
       if(this.getPrevXNextY(temp.X, temp.Y))aliveCount++;
       if(this.getPrevXPrevY(temp.X, temp.Y))aliveCount++;      
       //check should component be alive;
-      if(aliveCount === 3 && !this.hash[temp.X + "" + temp.Y]) newHash[temp.X + "" + temp.Y].value = true;
-      if((aliveCount === 3 || aliveCount === 2) &&  this.hash[temp.X + "" + temp.Y]) newHash[temp.X + "" + temp.Y].value = true;
-      if((aliveCount > 3 || aliveCount < 2) &&  this.hash[temp.X + "" + temp.Y]) newHash[temp.X + "" + temp.Y].value = false;
+      if(aliveCount === 3 && !this.hash[temp.index]) newHash[temp.index].value = true;
+      if((aliveCount === 3 || aliveCount === 2) &&  this.hash[temp.index]) newHash[temp.index].value = true;
+      if((aliveCount > 3 || aliveCount < 2) &&  this.hash[temp.index]) newHash[temp.index].value = false;
       aliveCount = 0;
     }   
     this.hash = this.cloneObject(newHash);
@@ -63,15 +55,11 @@ class ElementGrid{
     return true;//die   
   }; 
 
-  allDie(){
-    let xPos = 0;
-    let yPos = 0; 
+  allDie(){ 
     let temp;
     for(let i = 0; i < Math.pow(this.size, 2); i++){  
-      temp = ElementGrid.indexToPosition(i);
-      xPos = temp.X;
-      yPos = temp.Y;
-      if(this.hash[xPos + "" + yPos].value) return false;
+      temp = ElementGrid.indexToPosition(i);     
+      if(this.hash[temp.index].value) return false;
     }
   	return true;
   };
@@ -79,7 +67,7 @@ class ElementGrid{
   static indexToPosition(index){
     let yFind = parseInt(index / 10);
     let xFind = index - yFind * 10;
-    return {X: xFind, Y: yFind};
+    return {X: xFind, Y: yFind, index: xFind + "" + yFind};
   };
 
   findElement(posX, posY){

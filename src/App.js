@@ -49,13 +49,11 @@ class App extends Component {
  }
 
  createField(){   
-   let points = [];
-   let pointIndex = "";
-   let temp; //think about del it  
+   let points = [];  
+   let temp;  
    for(let i = 0; i < Math.pow(this.size, 2); i++){
-     temp = ElementGrid.indexToPosition(i);     
-     pointIndex = temp.X + "" + temp.Y;    
-     points.push(<Point alive = {this.state.aliveMas[pointIndex].value} key = {i}/>);
+     temp = ElementGrid.indexToPosition(i);    
+     points.push(<Point alive = {this.state.aliveMas[temp.index].value} key = {i}/>);
    }  
    return points;
  };
