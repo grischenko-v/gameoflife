@@ -32,8 +32,8 @@ class ElementGrid{
       yPos = temp.Y;
       this.hash[xPos + "" + yPos] = new Element(Math.random() >= 0.5, xPos, yPos);      
     }     
-   // this.hashMas.push(this.hash);
-  };
+    this.hashMas[this.hash.toStringHashId] = this.hash;
+    };
 
   addTransform(){
   	 let temp;
@@ -56,13 +56,12 @@ class ElementGrid{
       aliveCount = 0;
     }   
     this.hash = this.cloneObject(newHash);
-   // this.hashMas.push(this.hash);
-  };
-
-  allDie(){
-  	//check
-    //this.hashMas
-  };
+    if(this.hashMas[this.hash.toStringHashId] === undefined){
+      this.hashMas[this.hash.toStringHashId] = this.hash;
+      return false;//not die
+    }	
+    return false;//die   
+  }; 
  
   static indexToPosition(index){
     let yFind = parseInt(index / 10);
