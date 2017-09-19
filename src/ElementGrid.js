@@ -9,9 +9,17 @@ class ElementGrid{
   }; 
 
   toStringHashId(){
+  	let xPos = 0;
+    let yPos = 0; 
+    let temp;
+    let rtStr = "";
   	for(let i = 0; i < Math.pow(this.size,2); i++){
-
+      temp = ElementGrid.indexToPosition(i);
+      xPos = temp.X;
+      yPos = temp.Y;
+      rtStr += this.hash[xPos + "" + yPos].toString();   
   	}
+  	return rtStr;
   };
 
   init(){  
