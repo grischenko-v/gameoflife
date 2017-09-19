@@ -5,15 +5,15 @@ import ElementGrid from './ElementGrid';
 
 class App extends Component {
    constructor(props) {
-    super(props);   
-    this.frameId ="";
+    super(props);  
     this.frameCount = 0;    
     this.size = 10;
     this.fps = 40;
     this.grid = new ElementGrid(this.size);
     this.grid.init();   
     this.state = {     
-      aliveMas: this.grid.hash
+      aliveMas: this.grid.hash,
+      frameId: ""
     };  
     this.setColor = this.setColor.bind(this);
   };
@@ -22,30 +22,25 @@ class App extends Component {
     this.start();
  };
 
- componentWillUnmount() {
-    this.stop();
- };
-
- setColor(){      
-    if(this.frameCount < this.fps){
-      this.frameCount++;
-    }else{
-      this.frameCount = 0;
-
-       this.grid.addTransform();
-       
-     // if(this.allDie(this.state.aliveMas))    stop();   
-      this.setState({
-        aliveMas: this.grid.hash
-      });
-    }   
+ setColor(){  
+  let isAlive;    
+  if(this.frameCount < this.fps){
+    this.frameCount++;
+  }else{
+    this.frameCount = 0;
+    isAlive = this.grid.addTransform();
+    isAlive &= this.grid.allDie();    
+    if(isAlive) this.stop();
+    else this.setState({
+            aliveMas: this.grid.hash
+         });
+  }   
     this.frameId = window.requestAnimationFrame( this.setColor )
-   };
+  };
 
  start(){
    if( !this.frameId ) {
-     this.frameId = 
-     window.requestAnimationFrame( this.setColor );
+     this.state.frameId = window.requestAnimationFrame( this.setColor );
    }
  }
 
