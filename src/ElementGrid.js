@@ -4,20 +4,27 @@ class ElementGrid{
   constructor(aSize){
     this.hash = {}; 
     this.size = aSize;     
-    this.hashMas = [];
+    this.hashMas = {};
+    this.hashId = 0;
   }; 
+
+  toStringHashId(){
+  	for(let i = 0; i < Math.pow(this.size,2); i++){
+
+  	}
+  };
 
   init(){  
     let xPos = 0;
     let yPos = 0; 
     let temp;
     for(let i = 0; i < Math.pow(this.size, 2); i++){  
-      temp = this.indexToPosition(i);
+      temp = ElementGrid.indexToPosition(i);
       xPos = temp.X;
       yPos = temp.Y;
       this.hash[xPos + "" + yPos] = new Element(Math.random() >= 0.5, xPos, yPos);      
     }     
-    this.hashMas.push(this.hash);
+   // this.hashMas.push(this.hash);
   };
 
   addTransform(){
@@ -25,7 +32,7 @@ class ElementGrid{
   	 let aliveCount = 0;
   	 let newHash = this.cloneObject(this.hash);
   	 for(let i = 0; i < Math.pow(this.size, 2); i++){  
-      temp = this.indexToPosition(i);
+      temp = ElementGrid.indexToPosition(i);
       if(this.getNextX(temp.X, temp.Y))aliveCount++;
       if(this.getPrevX(temp.X, temp.Y))aliveCount++;
       if(this.getNextY(temp.X, temp.Y))aliveCount++;
@@ -41,7 +48,7 @@ class ElementGrid{
       aliveCount = 0;
     }   
     this.hash = this.cloneObject(newHash);
-    this.hashMas.push(this.hash);
+   // this.hashMas.push(this.hash);
   };
 
   allDie(){
@@ -49,7 +56,7 @@ class ElementGrid{
     //this.hashMas
   };
  
-  indexToPosition(index){
+  static indexToPosition(index){
     let yFind = parseInt(index / 10);
     let xFind = index - yFind * 10;
     return {X: xFind, Y: yFind};

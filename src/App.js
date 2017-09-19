@@ -9,7 +9,7 @@ class App extends Component {
     this.frameId ="";
     this.frameCount = 0;    
     this.size = 10;
-    this.fps = 30;
+    this.fps = 40;
     this.grid = new ElementGrid(this.size);
     this.grid.init();   
     this.state = {     
@@ -53,18 +53,12 @@ class App extends Component {
      window.cancelAnimationFrame( this.state.frameId );
  }
 
- indexToPosition(index){
-   let yFind = parseInt(index / 10);
-   let xFind = index - yFind * 10;
-     return {X: xFind, Y: yFind};
- }
-
  createField(){   
    let points = [];
    let pointIndex = "";
    let temp; //think about del it  
    for(let i = 0; i < Math.pow(this.size, 2); i++){
-     temp = this.indexToPosition(i);     
+     temp = ElementGrid.indexToPosition(i);     
      pointIndex = temp.X + "" + temp.Y;    
      points.push(<Point alive = {this.state.aliveMas[pointIndex].value} key = {i}/>);
    }  
