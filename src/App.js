@@ -49,7 +49,7 @@ class App extends Component {
  }
 
  randomize(){
-    this.grid.init();
+    this.grid.randInit();
     this.setState({
             aliveMas: this.grid.hash
          });

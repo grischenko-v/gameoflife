@@ -18,7 +18,7 @@ class ElementGrid{
   	return rtStr;
   };
 
-  init(){    
+  randInit(){    
     let temp;
     for(let i = 0; i < Math.pow(this.size, 2); i++){   
       temp = ElementGrid.indexToPosition(i);
@@ -26,6 +26,15 @@ class ElementGrid{
     }     
     this.hashMas[this.hash.toStringHashId] = this.hash;
     };
+
+   init(){    
+    let temp;
+    for(let i = 0; i < Math.pow(this.size, 2); i++){   
+      temp = ElementGrid.indexToPosition(i);
+      this.hash[temp.index] = new Element(false, temp.X, temp.Y);      
+    }     
+    this.hashMas[this.hash.toStringHashId] = this.hash;
+    };  
 
   addTransform(){
   	 let temp;
