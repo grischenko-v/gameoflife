@@ -14,7 +14,8 @@ class App extends Component {
     this.grid.init();   
     this.state = {     
       aliveMas: this.grid.hash,
-      frameId: ""
+      frameId: "",
+      dataSeted: false
     };  
     this.setColor = this.setColor.bind(this);
     this.start = this.start.bind(this);
@@ -51,7 +52,9 @@ class App extends Component {
  randomize(){
     this.grid.randInit();
     this.setState({
-            aliveMas: this.grid.hash
+            aliveMas: this.grid.hash,        
+            dataSeted: true
+          
          });
  }
  
@@ -74,7 +77,7 @@ class App extends Component {
    return (
       <div>
       
-       <div className="container">
+       <div className={ this.state.dataSeted ? "container" : "containerGrad" }>
          {points}
        </div>
         <div className = "buttonContainer">
