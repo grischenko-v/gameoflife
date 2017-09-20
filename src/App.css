@@ -20,6 +20,8 @@
 	top: 0;
 	left: 0;
 	background: -moz-radial-gradient(transparent, rgba(0,0,0, 0.7));
+	background: -webkit-radial-gradient(transparent, rgba(0,0,0, 0.7));
+	background: radial-gradient(transparent, rgba(0,0,0, 0.7));
 }
 
 .container{
