@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Point from './Point/Point';
+import Button from './Button/Button';
 import ElementGrid from './ElementGrid';
 
 class App extends Component {
@@ -16,10 +17,13 @@ class App extends Component {
       frameId: ""
     };  
     this.setColor = this.setColor.bind(this);
+    this.start = this.start.bind(this);
+    this.stop = this.stop.bind(this);
+    this.randomize = this.randomize.bind(this);
   };
 
  componentDidMount(){
-    this.start();
+   // this.start();
  };
 
  setColor(){  
@@ -35,7 +39,7 @@ class App extends Component {
             aliveMas: this.grid.hash
          });
   }   
-    this.frameId = window.requestAnimationFrame( this.setColor )
+    this.state.frameId  = window.requestAnimationFrame( this.setColor )
   };
 
  start(){
@@ -44,6 +48,13 @@ class App extends Component {
    }
  }
 
+ randomize(){
+    this.grid.init();
+    this.setState({
+            aliveMas: this.grid.hash
+         });
+ }
+ 
  stop(){
      window.cancelAnimationFrame( this.state.frameId );
  }
@@ -61,8 +72,17 @@ class App extends Component {
  render() {
    const points = this.createField();
    return (
-      <div className="container">
-       {points}
+      <div>
+      
+       <div className="container">
+         {points}
+       </div>
+        <div className = "buttonContainer">
+         <Button value = "Start" start={this.start}/>
+         <Button value = "Stop" start={this.stop}/>
+         <Button value = "Randomize" start={this.randomize}/>
+         <Button value = "Manual Random" />
+       </div>
       </div>
     );
   }

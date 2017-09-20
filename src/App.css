@@ -1,10 +1,19 @@
 .container{
     margin: 0 auto;
-    margin-top: 50px;
+    margin-top: 20px;
     min-width: 615px;
     max-width: 615px;
     min-height: 655px;
     background: #eae8e8; 
     border-radius: 3%;
     box-shadow: inset 0 -5px 15px rgba(255,255,255,0.4), inset -2px -1px 40px rgba(0,0,0,0.4), 0 0 1px #000; 
+}
+
+.buttonContainer{
+    margin: 0 auto;
+    margin-top: 20px;
+    min-width: 615px;
+    max-width: 615px;
+    padding-left: 180px;
+    min-height: 20px;
 }
