@@ -46,8 +46,8 @@ class ElementGrid extends Component {
     this.frameCount = 0;
     isAlive = this.addTransform();
     isAlive &= this.allDie();    
-    //if(isAlive) this.stop();
-    //else 
+    if(isAlive) this.stop();
+    else 
     this.setState({
             aliveMas: this.hash,
            
@@ -83,10 +83,11 @@ class ElementGrid extends Component {
          newHash[temp.index] = <Element value = {false}  posX = {temp.X} posY = {temp.Y} key = {i}/>;
       aliveCount = 0;
     }   
-    console.log(newHash);
+    console.log(this.toStringHashId());
     this.hash = this.cloneObject(newHash);
-    if(this.hashMas[this.hash.toStringHashId] === undefined){
-      this.hashMas[this.hash.toStringHashId] = this.hash;
+    if(this.hashMas[this.toStringHashId()] === undefined){
+      this.hashMas[this.toStringHashId()] = this.hash;
+
       return false;//not die
     } 
     return true;//die   
@@ -98,7 +99,7 @@ class ElementGrid extends Component {
       temp = this.indexToPosition(i);      
       this.hash[temp.index] =  <Element value = {false}  posX = {temp.X} posY = {temp.Y} key = {i}/>;      
     }     
-    this.hashMas[this.toStringHashId] = this.hash;
+    this.hashMas[this.toStringHashId()] = this.hash;
   }; 
   randInit(){    
     let temp;
@@ -106,7 +107,7 @@ class ElementGrid extends Component {
       temp = this.indexToPosition(i);      
       this.hash[temp.index] = <Element value = {(Math.random() >= 0.5)}  posX = {temp.X} posY = {temp.Y} key = {i}/>;      
     }    
-    this.hashMas[this.toStringHashId] = this.hash;
+    this.hashMas[this.toStringHashId()] = this.hash;
   }; 
   indexToPosition(index){
     let yFind = parseInt(index / 10);
@@ -119,7 +120,7 @@ class ElementGrid extends Component {
     let rtStr = "";
     for(let i = 0; i < Math.pow(this.props.size,2); i++){
       temp = ElementGrid.indexToPosition(i);     
-      rtStr += this.hash[temp.index].toString();   
+      rtStr += (+this.hash[temp.index].props.value) + "";   
     }
     return rtStr;
   };
@@ -190,14 +191,8 @@ class ElementGrid extends Component {
   cloneObject(obj) {
     let clone = {};
     for(let i in obj) {
-        clone[i] = React.cloneElement(obj[i]);
-        /*if(typeof(obj[i]) === "object" && obj[i] != null)
-           // clone[i] = this.cloneObject(obj[i]);
-  
-        else
-            clone[i] = obj[i];*/
-    } 
-         // 
+       clone[i] = React.cloneElement(obj[i]);  
+    }     
     return clone;
   };
 
