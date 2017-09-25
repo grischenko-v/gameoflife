@@ -3,7 +3,7 @@ import './Element.css';
 
 class Element extends Component {
   
-  constructor(props, value, posX, posY){
+  constructor(props){
     super(props);
     this.value = this.props.value;
     this.posX = this.props.posX;
