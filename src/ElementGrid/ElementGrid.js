@@ -22,21 +22,26 @@ class ElementGrid extends Component {
     this.setColor = this.setColor.bind(this); 
   }
 
- componentDidMount(){
+  componentDidMount() {
     this.start();
- };
+    this.props.onRef(this);
+  }
+
+  componentWillUnmount() {
+    this.props.onRef(undefined)
+  }
 
   start(){
    if( !this.state.frameId ) {
     this.setState({
             frameId: window.requestAnimationFrame( this.setColor )
          });     
-   }
- }
+     }
+  };
 
  stop(){
      window.cancelAnimationFrame( this.state.frameId );
- }
+ };
 
   setColor(){  
   let isAlive;    
@@ -82,8 +87,7 @@ class ElementGrid extends Component {
       if((aliveCount > 3 || aliveCount < 2) &&  this.hash[temp.index].props.value) 
          newHash[temp.index] = <Element value = {false}  posX = {temp.X} posY = {temp.Y} key = {i}/>;
       aliveCount = 0;
-    }   
-    console.log(this.toStringHashId());
+    }      
     this.hash = this.cloneObject(newHash);
     if(this.hashMas[this.toStringHashId()] === undefined){
       this.hashMas[this.toStringHashId()] = this.hash;
