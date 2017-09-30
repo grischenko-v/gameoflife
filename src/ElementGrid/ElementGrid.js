@@ -22,14 +22,11 @@ class ElementGrid extends Component {
     this.start = this.start.bind(this);
     this.stop = this.stop.bind(this);
     this.setColor = this.setColor.bind(this); 
+    this.randInit = this.randInit.bind(this); 
   }
 
   componentDidMount() {
     this.start();    
-  }
-
-  componentWillUnmount() {
-   
   }
 
   start(){
@@ -67,7 +64,7 @@ class ElementGrid extends Component {
     else 
     this.setState({
             aliveMas: this.hash
-                       
+
         });
   }
      this.setState({          
@@ -119,6 +116,9 @@ class ElementGrid extends Component {
   }; 
   randInit(){    
     let temp;
+    this.setState({        
+         isDie: false
+    });  
     for(let i = 0; i < Math.pow(this.props.size, 2); i++){   
       temp = this.indexToPosition(i);      
       this.hash[temp.index] = <Element value = {(Math.random() >= 0.5)}  posX = {temp.X} posY = {temp.Y} key = {i}/>;      
@@ -231,7 +231,7 @@ class ElementGrid extends Component {
          {elements}
        </div>
        <div className = "buttonContainer">
-           <Button value = "Randomize" start={this.state.isDie ? this.gridRandomize : ""} enable = {this.state.isDie}/>
+           <Button value = "Randomize" start={this.state.isDie ? this.randInit : undefined} enable = {this.state.isDie}/>
        </div> 
        </div>       
     );
