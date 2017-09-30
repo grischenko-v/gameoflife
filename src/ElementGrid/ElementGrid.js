@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './ElementGrid.css';
 import Element from '../Element/Element';
+import Button from '../Button/Button';
 
 class ElementGrid extends Component {
   
@@ -14,7 +15,8 @@ class ElementGrid extends Component {
     this.state = {     
       aliveMas: this.hash,
       frameId: "",
-      dataSeted: false
+      dataSeted: false,
+      isDie: false
     };    
 
     this.start = this.start.bind(this);
@@ -23,21 +25,26 @@ class ElementGrid extends Component {
   }
 
   componentDidMount() {
-    this.start();
-    this.props.onRef(this);
+    this.start();    
   }
 
   componentWillUnmount() {
-    this.props.onRef(undefined)
+   
   }
 
   start(){
    if( !this.state.frameId ) {
     this.setState({
-            frameId: window.requestAnimationFrame( this.setColor )
+            frameId: window.requestAnimationFrame( this.setColor ),
+            isDie: false
          });     
      }
   };
+
+ getIsDie(){
+   return this.state.isDie;  
+ }
+
 
  stop(){
      window.cancelAnimationFrame( this.state.frameId );
@@ -51,11 +58,16 @@ class ElementGrid extends Component {
     this.frameCount = 0;
     isAlive = this.addTransform();
     isAlive &= this.allDie();    
-    if(isAlive) this.stop();
+    if(isAlive){ 
+        this.stop();
+        this.setState({
+            isDie: true
+        });
+    }
     else 
     this.setState({
-            aliveMas: this.hash,
-           
+            aliveMas: this.hash
+                       
         });
   }
      this.setState({          
@@ -214,9 +226,14 @@ class ElementGrid extends Component {
   render() {
     const elements = this.createFields();
     return (
+      <div>
       <div className= "container">
          {elements}
        </div>
+       <div className = "buttonContainer">
+           <Button value = "Randomize" start={this.state.isDie ? this.gridRandomize : ""} enable = {this.state.isDie}/>
+       </div> 
+       </div>       
     );
   }
 }

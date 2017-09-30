@@ -2,9 +2,12 @@ import React, { Component } from 'react';
 import './Button.css';
 
 class Button extends Component {
+
   render() {
+  	let green = this.props.enable ? " green" : "";
+  	let styles = "button" + green;
     return (
-      <div className = "button green" onClick={this.props.start}>
+      <div className = {styles} onClick={this.props.start}>
       {this.props.value}       
       </div>
     );
